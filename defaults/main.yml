@@ -1,0 +1,5 @@
+node_version: "v0.10.36"
+nvm_version: "v0.23.3"
+
+nvm_dir: /opt/nvm
+node_dir: "{{ nvm_dir }}/{{ node_version }}/bin"

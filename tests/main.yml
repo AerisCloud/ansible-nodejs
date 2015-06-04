@@ -1,0 +1,17 @@
+---
+# File for ansible-role-test (https://github.com/aeriscloud/ansible-role-test)
+name: "Tests"
+playbook:
+- hosts: all
+  sudo: yes
+  roles:
+  - role: "@ROLE_NAME@"
+  tasks:
+  - name: "Check that node v0.10.36 is installed"
+    nvm: >
+      version=v0.10.36
+      nvm_dir=/opt/nvm
+      state=present
+    register: node_installation
+  - fail: msg="node should already be installed"
+    when: node_installation|changed

@@ -1,0 +1,77 @@
+# Installs node
+- name: "Ensure the latest version of node is installed and ensure it's defined as the default"
+  nvm: >
+    version={{ node_version }}
+    state=present
+    default_alias=true
+    nvm_dir={{ nvm_dir }}
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Disable the npm spinner"
+  shell: |
+    executable=/bin/bash
+    source {{ nvm_dir }}/nvm.sh && \
+    npm config --global set spin false
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Get current npm version"
+  shell: |
+    executable=/bin/bash
+    source {{ nvm_dir }}/nvm.sh >/dev/null && \
+    npm --version
+  register: current_npm_version
+  when: npm_version is defined
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Update old npm version to 1.4.28"
+  shell: |
+    executable=/bin/bash
+    source {{ nvm_dir }}/nvm.sh && \
+    npm install --global npm@1.4.28 --ca=null
+  when: npm_version is defined and current_npm_version.stdout | version_compare('1.2', '<')
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Update old npm version to 1.4.28"
+  shell: |
+    executable=/bin/bash
+    source {{ nvm_dir }}/nvm.sh && \
+    npm install --global npm@1.4.28
+  when: npm_version is defined and current_npm_version.stdout | version_compare('1.2', '>=') and current_npm_version.stdout | version_compare('1.4.28', '<')
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Format npm_version variable if needed"
+  set_fact:
+    npm_version: '{{ "%s" | format(npm_version[1:]) }}'
+  when: npm_version is defined and npm_version | match('^v')
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Install the specified version of npm"
+  shell: |
+    executable=/bin/bash
+    source {{ nvm_dir }}/nvm.sh && \
+    npm install --global npm@{{ npm_version }}
+  when: npm_version is defined and current_npm_version.stdout != npm_version
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Clean the NPM cache"
+  shell: |
+    executable=/bin/bash
+    source {{ nvm_dir }}/nvm.sh && \
+    npm cache clean
+  tags:
+    - nodejs
+    - nvm

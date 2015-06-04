@@ -1,0 +1,33 @@
+- name: "Download the NVM repo from GitHub"
+  git: >
+    repo=https://github.com/creationix/nvm.git
+    dest="{{ nvm_dir }}"
+    version="{{ nvm_version }}"
+    update=yes
+  tags:
+    - nodejs
+    - nvm
+
+- name: "Add some custom NVM environment variables"
+  template: >
+    src=00_nvm_config.sh
+    dest=/etc/profile.d/
+    mode=0644
+    owner=root
+    group=root
+  tags:
+    - nodejs
+    - nvm
+    - files
+
+- name: "Add NVM to /etc/profile.d"
+  file: >
+    src="{{ nvm_dir }}/nvm.sh"
+    state=link
+    dest=/etc/profile.d/01_nvm.sh
+    owner=root
+    group=root
+  tags:
+    - nodejs
+    - nvm
+    - files

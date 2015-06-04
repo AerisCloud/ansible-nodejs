@@ -1,0 +1,29 @@
+galaxy_info:
+  author: Emilien Kenler <ekenler@wizcorp.jp>
+  description: Installs node.js on a server
+  company: Wizcorp K.K.
+  license: MIT
+  min_ansible_version: 1.8.1
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: debian
+      versions:
+        - wheezy
+    - name: ubuntu
+      versions:
+        - trusty
+        - vivid
+  categories:
+    - development
+    - web
+dependencies:
+  - role: aeriscloud.repos
+    repositories:
+      centos6:
+        - epel
+      centos7:
+        - epel
+  - role: aeriscloud.yum
