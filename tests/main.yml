@@ -7,9 +7,9 @@ playbook:
   roles:
   - role: "@ROLE_NAME@"
   tasks:
-  - name: "Check that node v0.12.4 is installed"
+  - name: "Check that the node version is installed"
     nvm: >
-      version=v0.12.4
+      version={{ node_version }}
       nvm_dir=/opt/nvm
       state=present
     register: node_installation
