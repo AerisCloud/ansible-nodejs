@@ -1,10 +1,9 @@
-- name: "Ensure development tools are installed (gcc, make, man, git)"
+- name: "Ensure development tools are installed (make, man, git)"
   yum: >
     name={{ item }}
     state=present
     enablerepo=epel
   with_items:
-    - gcc-c++
     - make
     - man
     - git
