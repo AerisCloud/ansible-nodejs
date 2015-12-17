@@ -1,0 +1,23 @@
+- name: "Ensure development tools are installed (gcc, make, man, git)"
+  yum: >
+    name={{ item }}
+    state=present
+  with_items:
+    - gcc-c++
+    - make
+    - man
+    - git
+    - curl
+  tags:
+    - nodejs
+    - libs
+    - pkgs
+
+- name: "Install updated CA Certificates"
+  yum: >
+    name=ca-certificates
+    state=latest
+  tags:
+    - nodejs
+    - libs
+    - pkgs
