@@ -31,3 +31,5 @@ dependencies:
   - role: aeriscloud.devtoolset2
     devtoolset_2_packages:
       - devtoolset-2-gcc-c++
+      - devtoolset-2-binutils
+      - devtoolset-2-binutils-devel
