@@ -1,4 +1,23 @@
 # Installs node
+
+# Here, we ensure the spinner is disabled by default before loading nvm.sh, because loading nvm.sh with nodejs v5
+# will load invisible characters which breaks output for ansible to detect the correct ansible tmp directories,
+# therefore breaking provisioning.
+- name: "Ensure the npm spinner is disabled before loading nvm.sh"
+  sudo: false
+  lineinfile: >
+    create=yes
+    dest=~/.npmrc
+    state=present
+    regexp="^{{ item.variable }}="
+    line="{{ item.variable }}={{ item.value}}"
+  with_items:
+    - { variable: "spin", value: "false" }
+    - { variable: "progress", value: "false" }
+  tags:
+    - nodejs
+    - nvm
+
 - name: "Ensure the latest version of node is installed and ensure it's defined as the default"
   nvm: >
     version={{ node_version }}
@@ -12,8 +31,9 @@
 - name: "Disable the npm spinner"
   shell: |
     executable=/bin/bash
-    source {{ nvm_dir }}/nvm.sh && \
-    npm config --global set spin false
+    source {{ nvm_dir }}/nvm.sh >/dev/null && \
+    npm config --global set spin false && \
+    npm config --global set progress false
   tags:
     - nodejs
     - nvm
