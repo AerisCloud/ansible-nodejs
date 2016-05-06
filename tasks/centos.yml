@@ -4,6 +4,7 @@
     state=present
     enablerepo=epel
   with_items:
+    - gcc-c++
     - make
     - man
     - git
