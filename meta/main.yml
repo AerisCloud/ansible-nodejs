@@ -9,11 +9,11 @@ galaxy_info:
       versions:
         - 6
         - 7
-    - name: debian
+    - name: Debian
       versions:
         - wheezy
         - jessie
-    - name: ubuntu
+    - name: Ubuntu
       versions:
         - trusty
         - vivid
@@ -21,14 +21,14 @@ galaxy_info:
     - development
     - web
 dependencies:
-  - role: aeriscloud.repos
+  - role: AerisCloud.repos
     repositories:
       centos6:
         - epel
       centos7:
         - epel
-  - role: aeriscloud.yum
-  - role: aeriscloud.devtoolset2
+  - role: AerisCloud.yum
+  - role: AerisCloud.devtoolset2
     devtoolset_2_packages:
       - devtoolset-2-gcc-c++
       - devtoolset-2-binutils
