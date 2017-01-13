@@ -4,7 +4,7 @@
 # will load invisible characters which breaks output for ansible to detect the correct ansible tmp directories,
 # therefore breaking provisioning.
 - name: "Ensure the npm spinner is disabled before loading nvm.sh"
-  sudo: false
+  become: false
   lineinfile: >
     create=yes
     dest=~/.npmrc
