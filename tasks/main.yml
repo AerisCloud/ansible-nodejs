@@ -1,15 +1,23 @@
 # Tasks for nodejs application
 
 - include: centos.yml
+  become: yes
+  become_user: root
   when: ansible_distribution == 'CentOS'
 
 - include: amazon.yml
+  become: yes
+  become_user: root
   when: ansible_distribution == 'Amazon'
 
 - include: debian.yml
+  become: yes
+  become_user: root
   when: ansible_distribution == 'Debian'
 
 - include: ubuntu.yml
+  become: yes
+  become_user: root
   when: ansible_distribution == 'Ubuntu'
 
 - include: nvm.yml
