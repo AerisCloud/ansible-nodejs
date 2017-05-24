@@ -1,5 +1,7 @@
-node_version: "v4.2.3"
-nvm_version: "v0.31.0"
+node_version: "v6.10.3"
+nvm_version: "v0.33.2"
 
 nvm_dir: /opt/nvm
 node_dir: "{{ nvm_dir }}/{{ node_version }}/bin"
+
+nvm_system_wide_install: true

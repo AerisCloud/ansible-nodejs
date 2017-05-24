@@ -15,6 +15,7 @@
     mode=0644
     owner=root
     group=root
+  when: nvm_system_wide_install|bool
   tags:
     - nodejs
     - nvm
@@ -27,6 +28,18 @@
     dest=/etc/profile.d/01_nvm.sh
     owner=root
     group=root
+  when: nvm_system_wide_install|bool
+  tags:
+    - nodejs
+    - nvm
+    - files
+
+- name: "Source nvm in ~/.bashrc"
+  lineinfile: >
+    dest=~/.bashrc
+    line=". {{ nvm_dir }}/nvm.sh"
+    create=yes
+  when: not nvm_system_wide_install|bool
   tags:
     - nodejs
     - nvm
