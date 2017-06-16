@@ -91,7 +91,7 @@
   shell: |
     executable=/bin/bash
     source {{ nvm_dir }}/nvm.sh && \
-    npm cache clean
+    npm cache clean --force
   tags:
     - nodejs
     - nvm
