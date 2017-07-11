@@ -31,8 +31,8 @@ def is_installed(version, nvm_dir):
     returncode, output, _ = nvm('ls', nvm_dir=nvm_dir)
     if returncode == 3:
         return False
-    for line in output.split('\n'):
-        if line and version in line:
+    for line in output.split(b'\n'):
+        if line and version.encode() in line:
             return True
     return False
 
@@ -65,7 +65,7 @@ def main():
             changed = True
         if default_alias:
             _, output, _ = nvm('alias', 'default', nvm_dir=nvm_dir)
-            if version not in output:
+            if version.encode() not in output:
                 returncode, _, stderr = nvm('alias', 'default', version,
                                          nvm_dir=nvm_dir)
                 if returncode != 0:
